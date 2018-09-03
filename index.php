@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.min.css">
         <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.css">
         <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" type='image/png' href="img/Logo.png">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     </head>
@@ -35,35 +36,35 @@
             <div class="col-md-2"><img src="img/Logo.png" class="ImgLogo" alt="Responsive image"></div>
             <div class="col-md-10"><img src="img/Couverture.jpg" class="ImgCouverture" alt="Responsive image"></div>
         </div>
-        <!-Container-POST-> 
+        <!-Container-ADD_POST-> 
         <div class="row">
             <div class="col-md-2">
+            </div>
+            <div class="col-md-10">
                 <div class="form-group">
                     <fieldset>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" class="form-control-file" id="inputFile" aria-describedby="fileHelp" accept="image/*">
+                            <input type="file" class="form-control-file" id="inputFile" aria-describedby="fileHelp" accept="image/*" multiple>
                             <small>
                                 Ce bouton permet de sélectionner des images et de les poster sur cette page.
                             </small>
-                            <label for="exampleTextarea">Exprimez-vous</label>
                             <textarea class="form-control" id="textarea" rows="3"></textarea>
                             <button type="submit" class="btn btn-primary">Poster</button>
                         </div>
                     </fieldset>
-                </div></div>
-            <div class="col-md-10">
-                <div class="jumbotron">
-                    <h1>Posts</h1>
                 </div>
             </div>
         </div>
-
+        <!Containter-POST
+        <div class="row">
+            <div class="jumbotron">
+            <h1>Posts</h1>
+            </div>
         </div>
     </body>
-<footer class="footer">
-    <div class="footer-container">
-        ©CFPTSocialBook
-    </div>
-</footer>
+    <footer class="footer">
+        <div class="footer-container">
+            ©CFPTSocialBook
+        </div>
+    </footer>
 </html>
