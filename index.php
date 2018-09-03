@@ -42,23 +42,25 @@
             </div>
             <div class="col-md-10">
                 <div class="form-group">
-                    <fieldset>
-                        <div class="form-group">
-                            <input type="file" class="form-control-file" id="inputFile" aria-describedby="fileHelp" accept="image/*" multiple>
-                            <small>
-                                Ce bouton permet de sélectionner des images et de les poster sur cette page.
-                            </small>
-                            <textarea class="form-control" id="textarea" rows="3"></textarea>
-                            <button type="submit" class="btn btn-primary">Poster</button>
-                        </div>
-                    </fieldset>
+                    <form method="POST" action="addContent.php" enctype="multipart/form-data">
+                        <fieldset>
+                            <div class="form-group">
+                                <input type="file" class="form-control-file" id="inputFile" name="inputFile[]" aria-describedby="fileHelp" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*" multiple>
+                                <small>
+                                    Ce bouton permet de sélectionner des images et de les poster sur cette page.
+                                </small>
+                                <textarea class="form-control" id="textarea" name="textArea" rows="3"></textarea>
+                                <button type="submit" name="submitContent" class="btn btn-primary">Poster</button>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
         <!Containter-POST
         <div class="row">
             <div class="jumbotron">
-            <h1>Posts</h1>
+                <h1>Posts</h1>
             </div>
         </div>
     </body>
