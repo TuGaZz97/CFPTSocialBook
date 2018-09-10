@@ -31,32 +31,60 @@ if(filter_has_var(INPUT_POST, "submitContent")){
                     echo "is bigger than 70'000'000 bytes -> ".$imagePost["size"][$i];
                 }
             }
+
+            /*********************************************************************************************/
+            $name = $imagePost['tmp_name'][$i];  
+            $filename = $imagePost['name'][$i]; 
+            //déplace les images dans le répertoire par default
+            $uploads_dir = 'img/uploads';
+            //Génère un identifiant unique
+            $UUID = uniqid();
+
+            /* Methode GD
+
+            //Taille max de l'image
+            $width = 1200;
+            $height = 1200;
+
+            // Calcul des nouvelles dimensions
+            list($width_orig, $height_orig) = getimagesize($name);
+
+            $ratio_orig = $width_orig/$height_orig;
+
+            if ($width/$height > $ratio_orig) {
+                $width = $height*$ratio_orig;
+            } else {
+                $height = $width/$ratio_orig;
+            }
+
+            // Redimensionnement
+            $image_p = imagecreatetruecolor($width, $height);
+            $image = imagecreatefromjpeg($name);
+            imagecopyresampled($image_p, $image, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+            //Déplace l'image dans le répertoire uploads
+            move_uploaded_file($imagePost['tmp_name'][$i], "$uploads_dir/$UUID"."_"."$filename");*/
+
+            //Déplace l'image sélectionner dans le dossier upload
+            move_uploaded_file($name, "$uploads_dir/$UUID"."_"."$filename");
+            // *** 1) Initialise / load image
+            $resizeObj = new resize($uploads_dir."/".$UUID."_".$filename);
+
+            // *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+            $resizeObj -> resizeImage(1000, 900, 'landscape');
+
+            // *** 3) Save image
+            $resizeObj -> saveImage($uploads_dir.$UUID. "_" .$filename.'', 9);
+
+            //Affichage image redimensionnée
+            echo '<br><img src="img/uploads/'.$UUID. "_" .$filename.'">';
         }
-        //déplace les images dans le répertoire par default
-        $uploads_dir = '.img/uploads/';
-        //Génère un identifiant unique
-        $UUID = uniqid();
-        //Récupère l'extention du nom
-        $path_parts = pathinfo($uploads_dir.$imagePost['name']);
-        $ext = $path_parts['extension'];
-            
-		move_uploaded_file($imagePost['tmp_name'][$i], "$uploads_dir/$UUID.".".$ext");
-        
-        
-     /*   // Affichage image de base
-        echo '<br><img src="img/'.$imagePost['name'][$i].'">';
+        else
+        {
+            header('Location: index.php');
+        }
 
-        // *** 1) Initialise / load image
-        $resizeObj = new resize('img/'.$imagePost['name'][$i].'');
 
-        // *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
-        $resizeObj -> resizeImage(1000, 900, 'landscape');
 
-        // *** 3) Save image
-        $resizeObj -> saveImage('img/uploads/'.$imagePost['name'][$i].'', 9);
-
-        //Affichage image redimensionnée
-        echo '<br><img src="img/uploads/'.$imagePost['name'][$i].'">';*/
     }
 
 }
