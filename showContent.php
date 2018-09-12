@@ -10,8 +10,8 @@ $ShowPosts = GetPosts();
 
 if (isset($ShowPosts['idPost'])) 
 { 
-    $idPost = $ShowPosts['idPost'];
-    $ShowPicture =GetPostsImagebyId($idPost);
+    $id = $ShowPosts['idPost'];
+    $ShowPicture =GetPostsImagebyId($id);
 }
 
 include_once 'index.php';

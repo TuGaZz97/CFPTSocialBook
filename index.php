@@ -63,13 +63,12 @@
                 <h1>Posts</h1>
                 <?php
                 /**
-             * Micael Rodrigues
-             * T.IS-E2B
-             * 12.09.2018 
-             
-             */
+                 * Micael Rodrigues
+                 * T.IS-E2B
+                 * 12.09.2018 
+                 */
                 require_once 'showContent.php';
-                
+
                 foreach ($ShowPosts as $Posts) {
                 ?>
                 <div class="card mb-4">
@@ -83,10 +82,11 @@
                     <div class="card-footer text-muted">
                         <?php $Posts['DatePublication'] ?>
                     </div>
-                </div>
-                <?php
+                    <?php
                 }
-                ?>
+                    ?>
+                </div>
+
             </div>
         </div>
     </body>
