@@ -10,7 +10,7 @@ function connectDb()
     $server = '127.0.0.1';
     $pseudo = 'root';
     $pwd = '';
-    $dbname = 'db-cfptsocialbook';
+    $dbname = 'db_cfptsocialbook';
     
     static $db = null;
     

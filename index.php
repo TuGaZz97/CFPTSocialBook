@@ -61,6 +61,32 @@
         <div class="row">
             <div class="jumbotron">
                 <h1>Posts</h1>
+                <?php
+                /**
+             * Micael Rodrigues
+             * T.IS-E2B
+             * 12.09.2018 
+             
+             */
+                require_once 'showContent.php';
+                
+                foreach ($ShowPosts as $Posts) {
+                ?>
+                <div class="card mb-4">
+                    <img class="card-img-top" src="img/uploads/<?php $ShowPicture['NameImage'] ?>">
+                    <div class="card-body">
+                        <h2 class="card-title">Post</h2>
+                        <p class="card-text"><?php $Posts['Commentaire'] ?></p>
+                        <a href="#" class="btn btn-info">Modifier &rarr;</a>
+                        <a href="#" class="btn btn-danger">Supprimer</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <?php $Posts['DatePublication'] ?>
+                    </div>
+                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </body>
