@@ -70,6 +70,8 @@ if(filter_has_var(INPUT_POST, "submitContent")){
         else
         {
             header('Location: index.php');
+            //Supprime l'image dans le dossier
+            unlink($UUID. "_" .$filename);
             echo "Erreur d'uploads";
         }
 
