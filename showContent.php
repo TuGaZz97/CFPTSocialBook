@@ -7,11 +7,13 @@
 require_once 'library.php';
 
 $ShowPosts = GetPosts();
+$id = $ShowPosts['idPost'];
+$ShowPicture =GetPostsImagebyId($id);
 
-if (isset($ShowPosts['idPost'])) 
+
+/*if (!empty($ShowPosts['idPost'])) 
 { 
-    $id = $ShowPosts['idPost'];
-    $ShowPicture =GetPostsImagebyId($id);
-}
+
+}*/
 
 include_once 'index.php';

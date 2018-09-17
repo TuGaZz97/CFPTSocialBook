@@ -15,6 +15,7 @@ if(filter_has_var(INPUT_POST, "submitContent")){
     $Comment = filter_input(INPUT_POST, "textArea", FILTER_SANITIZE_STRING);
 
     $imagePost = $_FILES['inputFile'];
+    $idPost = InsertDataPost($Comment);
     for($i=0;$i<count($imagePost['name']); $i++)
     {
         //Check type,errors,size
@@ -57,9 +58,8 @@ if(filter_has_var(INPUT_POST, "submitContent")){
             {
                 $idPost = InsertDataPost($Comment);
             }
-            else{ //sinon faire les deux
+            else{
                 //Ajout dans la BD
-                $idPost = InsertDataPost($Comment);
                 InsertDataPicturebyId($UUID. "_" .$filename,$idPost);
                 //Redirection vers page principal 
             }

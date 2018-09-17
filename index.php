@@ -70,17 +70,18 @@
                 require_once 'showContent.php';
 
                 foreach ($ShowPosts as $Posts) {
+                    print_r($ShowPicture)
                 ?>
                 <div class="card mb-4">
-                    <img class="card-img-top" src="img/uploads/<?php $ShowPicture['NameImage'] ?>">
+                    <img class="card-img-top" src="img/uploads/<?php echo $ShowPicture['NameImage']; ?>">
                     <div class="card-body">
                         <h2 class="card-title">Post</h2>
-                        <p class="card-text"><?php $Posts['Commentaire'] ?></p>
+                        <p class="card-text"><?php echo $Posts['Commentaire']; ?></p>
                         <a href="#" class="btn btn-info">Modifier &rarr;</a>
                         <a href="#" class="btn btn-danger">Supprimer</a>
                     </div>
                     <div class="card-footer text-muted">
-                        <?php $Posts['DatePublication'] ?>
+                        <?php echo $Posts['DatePublication']; ?>
                     </div>
                     <?php
                 }

@@ -50,21 +50,11 @@ function InsertDataPost($NamePost) {
  */
 function GetPosts(){
     $db = connectDb();
-    $sql = "SELECT 'idPost', 'Commentaire', 'DatePublication' FROM `posts`";
+    $sql = "SELECT `idPost`, `Commentaire`, `DatePublication` FROM `posts`";
     $request = $db->prepare($sql);
     $request->execute(array());
     return $request->fetchAll();
 }
-/**
- * Récupère le Nom de L'image bd --> postImage
- 
-function GetPostsImage(){
-    $db = connectDb();
-    $sql = "SELECT `NameImage` FROM `postimage`";
-    $request = $db->prepare($sql);
-    $request->execute(array());
-    return $request->fetchAll();
-}*/
 
 /**
  * Récupère le Nom de L'image par rapport a l'id du post lié bd --> postImage
