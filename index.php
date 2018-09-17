@@ -68,14 +68,30 @@
                  * 12.09.2018 
                  */
                 require_once 'showContent.php';
+                require_once 'library.php';
 
-                foreach ($ShowPosts as $Posts) {
-                    print_r($ShowPicture)
+                foreach ($ShowPosts as $Posts) 
+                {
+
+                    $listImgs = GetPostsImagebyId($Posts['idPost']);
                 ?>
                 <div class="card mb-4">
-                    <img class="card-img-top" src="img/uploads/<?php echo $ShowPicture['NameImage']; ?>">
+                    <div class="row">
+                        <?php
+
+                    foreach($listImgs as $ShowPicture)
+                    {
+                        ?>
+
+                        <div class="col-xs-6 col-md-6">
+                            <img class="img-thumbnail img-responsive" src="img/uploads/<?php echo $ShowPicture['NameImage']; ?>">
+                        </div>
+
+                        <?php
+                    }
+                        ?>
+                    </div>
                     <div class="card-body">
-                        <h2 class="card-title">Post</h2>
                         <p class="card-text"><?php echo $Posts['Commentaire']; ?></p>
                         <a href="#" class="btn btn-info">Modifier &rarr;</a>
                         <a href="#" class="btn btn-danger">Supprimer</a>

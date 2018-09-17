@@ -11,11 +11,19 @@ require_once ('dbconnection.php');
  * Insertion des images par rapport id post dans la BDD
  */
 function InsertDataPicturebyId($NameImage,$idPost) {
-    $db = connectDb();
-    $sql = "INSERT INTO `postimage`(`NameImage`,`idPost`)
+
+    try{
+        $db = connectDb();
+        $db->beginTransaction();
+        $sql = "INSERT INTO `postimage`(`NameImage`,`idPost`)
             VALUE (?,?)";
-    $request = $db->prepare($sql);
-    $request->execute(array($NameImage,$idPost));
+        $request = $db->prepare($sql);
+        $request->execute(array($NameImage,$idPost));
+        $db->commit();
+    }catch(Exception $e){
+        $db->rollBack();
+        echo "failed: " . $e->getMessage();
+    }
 }
 
 /**
@@ -61,7 +69,7 @@ function GetPosts(){
  */
 function GetPostsImagebyId($idPost){
     $db = connectDb();
-    $sql = "SELECT `NameImage` FROM `postimage` Where idPost = :idPosts";
+    $sql = "SELECT `NameImage`, `idPost` FROM `postimage` Where idPost = :idPosts";
     $request = $db->prepare($sql);
     $request->execute(array(
         'idPosts' => $idPost
