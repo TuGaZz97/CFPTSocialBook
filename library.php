@@ -22,6 +22,7 @@ function InsertDataPicturebyId($NameImage,$idPost) {
         $db->commit();
     }catch(Exception $e){
         $db->rollBack();
+        echo "Erreur lors de l'insertion d'image by id";
         echo "failed: " . $e->getMessage();
     }
 }
@@ -30,27 +31,44 @@ function InsertDataPicturebyId($NameImage,$idPost) {
  * Insertion des images dans la BDD
  */
 function InsertDataPicture($NameImage) {
-    $db = connectDb();
-    $sql = "INSERT INTO `postimage`(`NameImage`)
+
+    try{
+        $db = connectDb();
+        $db->beginTransaction();
+        $sql = "INSERT INTO `postimage`(`NameImage`)
             VALUE (?)";
-    $request = $db->prepare($sql);
-    $request->execute(array($NameImage));
+        $request = $db->prepare($sql);
+        $request->execute(array($NameImage));
+        $db->commit();
+    }catch(Exception $e){
+        $db->rollBack();
+        echo "Erreur lors de l'insertion d'image";
+        echo "failed: " . $e->getMessage();
+    }
 }
 
 /**
  * Insertion des posts dans la BDD
  */
 function InsertDataPost($NamePost) {
-    $db = connectDb();
-    $sql = "INSERT INTO `posts`(`Commentaire`,`DatePublication`)
+    try{
+        $db = connectDb();
+        $db->beginTransaction();
+        $sql = "INSERT INTO `posts`(`Commentaire`,`DatePublication`)
             VALUE (:Commentaire,:Date)";
-    $date = date("Y-m-d H:i:s");
-    $request = $db->prepare($sql);
-    $request->execute(array(
-        'Commentaire' => $NamePost,
-        'Date' => $date
-    ));
-    return $db->lastInsertId();
+        $date = date("Y-m-d H:i:s");
+        $request = $db->prepare($sql);
+        $request->execute(array(
+            'Commentaire' => $NamePost,
+            'Date' => $date
+        ));
+        return $db->lastInsertId();
+        $db->commit();
+    }catch(Exception $e){
+        $db->rollBack();
+        echo "Erreur lors de l'insertion de posts";
+        echo "failed: " . $e->getMessage();
+    }
 }
 
 /**
@@ -75,5 +93,45 @@ function GetPostsImagebyId($idPost){
         'idPosts' => $idPost
     ));
     return $request->fetchAll();
+}
+
+/**
+ * Supprime l'image dans la base de donnée
+ */
+function DeletePostsImage($idImage){
+    try{
+        $db = connectDb();
+        $db->beginTransaction();
+        $sql = "DELETE FROM `postimage` Where idPostImage = :idImage";
+        $request = $db->prepare($sql);
+        $request->execute(array(
+            'idImage' => $idImage
+        ));
+        $db->commit();
+    }catch(Exception $e){
+        $db->rollBack();
+        echo "Erreur lors de la suppression d'image";
+        echo "failed: " . $e->getMessage();
+    }
+}
+
+/**
+ * Supprime le posts dans la base de donnée
+ */
+function DeletePosts($idPost){
+    try{
+        $db = connectDb();
+        $db->beginTransaction();
+        $sql = "DELETE FROM `posts` WHERE `idPost` = :idPosts";
+        $request = $db->prepare($sql);
+        $request->execute(array(
+            'idPosts' => $idPost
+        ));
+        $db->commit();
+    }catch(Exception $e){
+        $db->rollback();
+        echo "Erreur lors de la suppression de post";
+        echo "failed: " . $e->getMessage();
+    }
 }
 ?>

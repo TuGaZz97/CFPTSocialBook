@@ -94,16 +94,39 @@
                     <div class="card-body">
                         <p class="card-text"><?php echo $Posts['Commentaire']; ?></p>
                         <a href="#" class="btn btn-info">Modifier &rarr;</a>
-                        <a href="#" class="btn btn-danger">Supprimer</a>
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Supprimer</a>
                     </div>
                     <div class="card-footer text-muted">
                         <?php echo $Posts['DatePublication']; ?>
                     </div>
+
+                    <!-- delete modal box-->
+                    <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Suppression Post N° <?php echo $Posts['idPost']; ?></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Etes-vous sur de vouloir supprimer le post N° <?php echo $Posts['idPost']; ?> ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="deletePost.php" method="post">
+                                        <button type="submit" name="deletePost" class="btn btn-primary">Supprimer</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <?php
                 }
                     ?>
                 </div>
-
             </div>
         </div>
     </body>
@@ -112,4 +135,7 @@
             ©CFPTSocialBook
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </html>
