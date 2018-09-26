@@ -83,6 +83,19 @@ function GetPosts(){
 }
 
 /**
+ *Affiche Commentaire & DatePublication d'après un id bd --> posts
+ */
+function GetPostbyId($idPost){
+    $db = connectDb();
+    $sql = "SELECT `idPost`, `Commentaire`, `DatePublication` FROM `posts` WHERE `idPost` = :idPostById";
+    $request = $db->prepare($sql);
+    $request->execute(array(
+    'idPostById' => $idPost
+    ));
+    return $request->fetchAll();
+}
+
+/**
  * Récupère le Nom de L'image par rapport a l'id du post lié bd --> postImage
  */
 function GetPostsImagebyId($idPost){
@@ -126,6 +139,29 @@ function DeletePosts($idPost){
         $request = $db->prepare($sql);
         $request->execute(array(
             'idPosts' => $idPost
+        ));
+        $db->commit();
+    }catch(Exception $e){
+        $db->rollback();
+        echo "Erreur lors de la suppression de post";
+        echo "failed: " . $e->getMessage();
+    }
+}
+
+/**
+ * Modification les posts dans la base de donnée
+ */
+function UpdatePosts($idPost,$ModifComment){
+    try{
+        $db = connectDb();
+        $db->beginTransaction();
+        $sql = "UPDATE `posts` SET `idPost`=:idPosts,`Commentaire`=:ModifComment,`DateModification`=:Date";
+        $date = date("Y-m-d H:i:s");
+        $request = $db->prepare($sql);
+        $request->execute(array(
+            'idPosts' => $idPost,
+            'Date' => $date,
+            'ModifComment' => $ModifComment
         ));
         $db->commit();
     }catch(Exception $e){
