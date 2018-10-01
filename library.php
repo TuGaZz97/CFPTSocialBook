@@ -166,7 +166,7 @@ function UpdatePosts($idPost,$ModifComment){
         $db->commit();
     }catch(Exception $e){
         $db->rollback();
-        echo "Erreur lors de la suppression de post";
+        echo "Erreur lors de l'upload de post";
         echo "failed: " . $e->getMessage();
     }
 }
