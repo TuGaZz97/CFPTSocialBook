@@ -8,12 +8,12 @@
 function connectDb()
 {
     $server = '127.0.0.1';
-    $pseudo = 'root';
-    $pwd = '';
+    $pseudo = 'CfptUser';
+    $pwd = 'Super';
     $dbname = 'db_cfptsocialbook';
-    
+
     static $db = null;
-    
+
     if ($db === null)
     {
         $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
