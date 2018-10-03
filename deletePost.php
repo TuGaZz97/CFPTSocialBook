@@ -1,47 +1,58 @@
 <?php
 /* Micael Rodrigues
-* 24.09.2018
+* Version 1.0 : 24.09.2018
+* Version 2.0 : 03.10.2018
 * deletePost.php
 */
 require_once("library.php");
+require_once("dbconnection.php");
 
 $errors = array();
-
+$database = connectDb();
 //Vérifier contenu reçu par le formulaire
 if(filter_has_var(INPUT_POST, "deletePost")){
-  //Comment & images
-  $idPost = filter_input(INPUT_POST, 'idPostModal', FILTER_SANITIZE_STRING);
 
-echo $idPost;
+  try {
+    $database->beginTransaction();
 
-  $Post = GetPostbyId($idPost);
-  $Image = GetPostsImagebyId($idPost);
+    //Comment & images
+    $idPost = filter_input(INPUT_POST, 'idPostModal', FILTER_SANITIZE_STRING);
 
-  if (is_array($Post)) {
-    $comment = isset($Post['Commentaire']) ? $Post['Commentaire'] : NULL;
-    $date = isset($Post['DatePublication']) ? $Post['DatePublication'] : NULL;
-    $ImageDelete = isset($Image['NameImage']) ? $Image['NameImage'] : NULL;
+    $Post = GetPostbyId($idPost);
+    $Image = GetPostsImagebyId($idPost);
 
+    if (is_array($Post)) {
+      $comment = isset($Post['Commentaire']) ? $Post['Commentaire'] : NULL;
+      $date = isset($Post['DatePublication']) ? $Post['DatePublication'] : NULL;
+      $ImageDelete = isset($Image['NameImage']) ? $Image['NameImage'] : NULL;
 
-    /*
-    Si Delete les posts écrits alors fait aussi les images
-    */
-    if (DeletePosts($idPost)) {
-      //DeletePostsImage($Image['idPostImage']);
-      //Supprime l'image du répertoire courant
-      unlink("./img/uploads/" + $Image['NameImage']);
-      header("location: index.php");
-      echo "Suppression réussi";
-      exit;
+      /*
+      Si Delete les posts écrits alors fait aussi les images
+      */
+      if (DeletePosts($idPost)) {
+
+        foreach ($Image as $img) {
+          DeletePostsImage($img['idPostImage']);
+          //Supprime l'image du répertoire courant uniquement si tout a été correctement supprimé
+          if(!unlink("img/uploads/" . $img['NameImage'])) {
+            throw new Exception('file_not_exists');
+          }
+        }
+        header("Location: index.php");
+        echo "Suppression réussie";
+        $database->commit();
+        header('Location: index.php');
+      } else {
+        throw new Exception('deletion_failed');
+      }
+    } else {
+      throw new Exception('posts_empty');
     }
 
-  } else {
-    header("location:index.php");
-    echo "Tableau de post vide";
-    exit;
+
+  } catch(Exception $e) {
+    Debug($e);
+    $database->rollBack();
+    die;
   }
-} else {
-  header("location:index.php");
-  echo "Pas d'éléments à supprimer";
-  exit;
 }
