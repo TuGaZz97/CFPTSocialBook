@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://bootswatch.com/4/solar/bootstrap.css">
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" type='image/png' href="img/Logo.png">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
@@ -33,7 +34,7 @@
   <!-Couverture->
   <div class="row">
     <div class="col-md-2"><img src="img/Logo.png" class="ImgLogo" alt="Responsive image"></div>
-    <div class="col-md-10"><img src="img/Couverture.jpg" class="ImgCouverture" alt="Responsive image"></div>
+    <div class="col-md-10"><img src="img/Couverture.png" class="ImgCouverture" alt="Responsive image"></div>
   </div>
   <!-Container-ADD_POST->
   <div class="row">
@@ -95,8 +96,8 @@
         </div>
         <div class="card-body">
           <p class="card-text"><?php echo $Posts['Commentaire']; ?></p>
-          <a href="#" class="btn btn-info LienModal" data-toggle="modal" data-target="#updateModal<?php echo $Posts['idPost'];?>">Modifier &rarr;</a>
-          <a href="#" class="btn btn-danger LienModal" data-toggle="modal" data-target="#deleteModal<?php echo $Posts['idPost'];?>">Supprimer</a>
+          <i class="fas fa-edit" data-toggle="modal" data-target="#updateModal<?php echo $Posts['idPost'];?>"></i>
+          <i class="fas fa-trash" data-toggle="modal" data-target="#deleteModal<?php echo $Posts['idPost'];?>"></i>
         </div>
         <div class="card-footer text-muted">
           <?php echo $Posts['DatePublication']; ?>
@@ -104,20 +105,20 @@
 
         <!-- delete modal box-->
         <div class="modal" id="deleteModal<?php echo $Posts['idPost'];?>" tabindex="-1" role="dialog" aria-labelledby="deleteModal<?php echo $Posts['idPost'];?>" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Suppression Post N°<?php echo $Posts['idPost'];?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <input name="idPostModal" id="idPostModal" type="hidden" value="<?php echo $Posts['idPost'];?>">
-                Etes-vous sur de vouloir supprimer le post <?php echo $Posts['idPost'];?> ?
-              </div>
-              <div class="modal-footer">
-                <form action="deletePost.php" method="post">
+          <form action="deletePost.php" method="post">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Suppression Post N°<?php echo $Posts['idPost'];?></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input name="idPostModal" id="idPostModal" type="hidden" value="<?php echo $Posts['idPost'];?>">
+                  Etes-vous sur de vouloir supprimer le post <?php echo $Posts['idPost'];?> ?
+                </div>
+                <div class="modal-footer">
                   <button type="submit" name="deletePost" class="btn btn-primary">Supprimer</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 </form>
@@ -128,31 +129,31 @@
 
         <!-- Update modal box-->
         <div class="modal" id="updateModal<?php echo $Posts['idPost'];?>" tabindex="-1" role="dialog" aria-labelledby="updateModal<?php echo $Posts['idPost'];?>" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Edition du Post N° <?php echo $Posts['idPost'];?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <p><?php echo $Posts['Commentaire'];?></p>
-                <textarea rows="4" cols="50" name="CommentModification" form="usrform"></textarea>
-
-                <?php
-                $ImageSelect = GetPostsImagebyId($Posts['idPost']);
-                foreach ($ImageSelect as $Image) {
-                  ?>
-                    <form>
-                    <INPUT type="checkbox" name="ImageSelect" value="1"> <?php echo $Image['NameImage'] ?>
-                    </form>
-                    <?php
-                  }
-                  ?>
+          <form action="updatePost.php" method="post">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edition du Post N° <?php echo $Posts['idPost'];?></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
-                <div class="modal-footer">
-                  <form action="updatePost.php" method="post">
+                <div class="modal-body">
+                  <input name="idPostModal" id="idPostModal" type="hidden" value="<?php echo $Posts['idPost'];?>">
+                  <p><?php echo $Posts['Commentaire'];?></p>
+                  <textarea rows="4" cols="50" name="CommentModification" form="usrform"></textarea>
+                  <?php
+                  $ImageSelect = GetPostsImagebyId($Posts['idPost']);
+                  foreach ($ImageSelect as $Image) {
+                    ?>
+                    <form>
+                      <INPUT type="checkbox" name="ImageSelect" value="1"> <?php echo $Image['NameImage'] ?>
+                      </form>
+                      <?php
+                    }
+                    ?>
+                  </div>
+                  <div class="modal-footer">
                     <button type="submit" name="updatePost" class="btn btn-primary">Editer</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                   </form>
