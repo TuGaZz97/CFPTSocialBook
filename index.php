@@ -141,7 +141,7 @@
                 <div class="modal-body">
                   <input name="idPostModal" id="idPostModal" type="hidden" value="<?php echo $Posts['idPost'];?>">
                   <p><?php echo $Posts['Commentaire'];?></p>
-                  <textarea rows="4" cols="50" name="CommentModification" form="usrform"></textarea>
+                  <textarea rows="4" cols="50" id="CommentModification" name="CommentModification"></textarea>
                   <?php
                   $ImageSelect = GetPostsImagebyId($Posts['idPost']);
                   foreach ($ImageSelect as $Image) {

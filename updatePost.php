@@ -12,9 +12,10 @@ if(filter_has_var(INPUT_POST, "updatePost")){
 
   try {
     $database->beginTransaction();
-    
+
     $NewComment = filter_input(INPUT_POST, 'CommentModification', FILTER_SANITIZE_STRING);
     $idPost = filter_input(INPUT_POST, 'idPostModal', FILTER_SANITIZE_STRING);
+    //var_dump($NewComment);
 
     if (UpdatePosts($idPost,$NewComment)) {
       header("Location: index.php");
